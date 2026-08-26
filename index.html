@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telegram Bot Academy — bot.send_* Methods</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <button class="menu-toggle" id="menuToggle" aria-label="Открыть меню">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="brand">
+    <div class="brand-badge">TG</div>
+    <div class="brand-text">
+      <span class="brand-title">Telegram Bot Academy</span>
+      <span class="brand-sub">bot.send_* Methods</span>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <input type="text" id="searchInput" placeholder="Search methods..." autocomplete="off">
+  </div>
+
+  <div class="progress-pill" id="progressPill">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span id="progressLabel">0 / 10</span>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">📚 Все методы</div>
+    <nav class="method-nav" id="methodNav">
+      <button class="nav-item" data-target="hero">
+        <span class="nav-emoji">🏠</span><span>Главная</span>
+      </button>
+      <button class="nav-item" data-target="message" data-search="message текст send_message">
+        <span class="nav-emoji">📝</span><span>Message</span><span class="nav-check" id="check-message"></span>
+      </button>
+      <button class="nav-item" data-target="photo" data-search="photo фото send_photo">
+        <span class="nav-emoji">🖼</span><span>Photo</span><span class="nav-check" id="check-photo"></span>
+      </button>
+      <button class="nav-item" data-target="video" data-search="video видео send_video">
+        <span class="nav-emoji">🎥</span><span>Video</span><span class="nav-check" id="check-video"></span>
+      </button>
+      <button class="nav-item" data-target="audio" data-search="audio аудио send_audio">
+        <span class="nav-emoji">🎵</span><span>Audio</span><span class="nav-check" id="check-audio"></span>
+      </button>
+      <button class="nav-item" data-target="voice" data-search="voice голос send_voice">
+        <span class="nav-emoji">🎤</span><span>Voice</span><span class="nav-check" id="check-voice"></span>
+      </button>
+      <button class="nav-item" data-target="document" data-search="document документ файл send_document">
+        <span class="nav-emoji">📄</span><span>Document</span><span class="nav-check" id="check-document"></span>
+      </button>
+      <button class="nav-item" data-target="animation" data-search="animation gif анимация send_animation">
+        <span class="nav-emoji">🎞</span><span>Animation</span><span class="nav-check" id="check-animation"></span>
+      </button>
+      <button class="nav-item" data-target="sticker" data-search="sticker стикер send_sticker">
+        <span class="nav-emoji">😎</span><span>Sticker</span><span class="nav-check" id="check-sticker"></span>
+      </button>
+      <button class="nav-item" data-target="location" data-search="location локация карта send_location">
+        <span class="nav-emoji">📍</span><span>Location</span><span class="nav-check" id="check-location"></span>
+      </button>
+      <button class="nav-item" data-target="contact" data-search="contact контакт send_contact">
+        <span class="nav-emoji">👤</span><span>Contact</span><span class="nav-check" id="check-contact"></span>
+      </button>
+      <button class="nav-item" data-target="poll" data-search="poll опрос send_poll">
+        <span class="nav-emoji">📊</span><span>Poll</span><span class="nav-check" id="check-poll"></span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="reset-btn" id="resetProgress">Сбросить прогресс</button>
+    </div>
+  </aside>
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-text">
+        <span class="eyebrow">Python · Telebot · pyTelegramBotAPI</span>
+        <h1>Что я могу отправить<br>пользователю из бота?</h1>
+        <p>Научись отправлять текст, фото, видео, файлы и другие типы контента с помощью Telebot — на реальных примерах кода и живом превью чата.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" id="heroStart">Начать изучение ↓</button>
+          <div class="hero-progress">
+            <span id="heroProgressText">0 / 10 изучено</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit-ring"></div>
+        <div class="floating-chip chip-1">📝</div>
+        <div class="floating-chip chip-2">🖼</div>
+        <div class="floating-chip chip-3">🎥</div>
+        <div class="floating-chip chip-4">📊</div>
+        <div class="floating-chip chip-5">📍</div>
+        <div class="hero-core">bot.send_*()</div>
+      </div>
+    </section>
+
+    <!-- METHOD CARDS get injected here by script.js, one <section class="method-block"> per method -->
+    <div id="methodsRoot"></div>
+
+    <!-- QUIZ -->
+    <section class="quiz-section" id="quiz">
+      <div class="section-heading">
+        <span class="eyebrow">Проверь себя</span>
+        <h2>🧠 Quick Quiz</h2>
+        <p>5 вопросов о методах bot.send_*. Отвечай и смотри результат сразу.</p>
+      </div>
+      <div class="quiz-card" id="quizCard"></div>
+    </section>
+
+    <!-- FINAL CHALLENGE -->
+    <section class="challenge-section" id="challenge">
+      <div class="section-heading">
+        <span class="eyebrow">Финальное задание</span>
+        <h2>🚀 Build your first Telegram response</h2>
+        <p>Пользователь написал боту команду. Собери правильный ответ шаг за шагом.</p>
+      </div>
+
+      <div class="challenge-card">
+        <div class="challenge-trigger">
+          <span class="challenge-label">User sends</span>
+          <code id="challengeCommand">/photo</code>
+        </div>
+
+        <div class="challenge-steps" id="challengeSteps">
+          <div class="challenge-step">
+            <span class="step-num">1</span>
+            <span class="step-label">Что отправить?</span>
+            <div class="step-options" data-step="type" id="stepType"></div>
+          </div>
+          <div class="challenge-step">
+            <span class="step-num">2</span>
+            <span class="step-label">Какой метод использовать?</span>
+            <div class="step-options" data-step="method" id="stepMethod"></div>
+          </div>
+          <div class="challenge-step">
+            <span class="step-num">3</span>
+            <span class="step-label">Какой файл?</span>
+            <div class="step-options" data-step="file" id="stepFile"></div>
+          </div>
+          <div class="challenge-step">
+            <span class="step-num">4</span>
+            <span class="step-label">Какой текст добавить?</span>
+            <div class="step-options" data-step="text" id="stepText"></div>
+          </div>
+        </div>
+
+        <div class="challenge-result" id="challengeResult">
+          <div class="challenge-result-label">Результат:</div>
+          <pre class="challenge-result-code" id="challengeResultCode">// Собери шаги выше 👆</pre>
+          <div class="challenge-verdict" id="challengeVerdict"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= LIVE PREVIEW (sticky) ================= -->
+  <aside class="preview-panel" id="previewPanel">
+    <div class="preview-sticky">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="tg-window">
+          <div class="tg-header">
+            <div class="tg-avatar">B</div>
+            <div class="tg-header-text">
+              <span class="tg-name">Study Bot</span>
+              <span class="tg-status" id="tgStatus">online</span>
+            </div>
+            <div class="tg-header-icons">⋮</div>
+          </div>
+          <div class="tg-chat" id="tgChat">
+            <div class="tg-day-sep"><span>Сегодня</span></div>
+            <div class="tg-msg tg-in">
+              <div class="tg-bubble">Привет! Нажми «Try Example» на любой карточке 👋<span class="tg-time">12:00</span></div>
+            </div>
+          </div>
+          <div class="tg-inputbar">
+            <span>Message</span>
+          </div>
+        </div>
+      </div>
+      <p class="preview-hint">Live preview — здесь появляется результат bot.send_*()</p>
+    </div>
+  </aside>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="footer-brand">Telegram Bot Academy</div>
+  <div class="footer-tagline">Learn → Practice → Build 🚀</div>
+</footer>
+
+<div class="toast" id="toast">Copied! ✓</div>
+
+<script src="script.js"></script>
+</body>
+</html>
